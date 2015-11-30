@@ -12,15 +12,12 @@ require_once( 'PhpDateHumanizer.php' );
 
 <?php
 
-$start = microtime(true);
-
 echo '<table>';
 
 $dates = array(
     array( '2015' ),
     array( '2015', '2015' ),
     array( '2015', '2016' ),
-    array( '2015', '2016', '2017' ),
     array( '2015-02' ),
     array( '2015-02', '2016' ),
     array( '2015-02-20', '2016' ),
@@ -28,7 +25,7 @@ $dates = array(
     array( '2015-02-20', '2016-08' ),
     array( '2015', '2016-02' ),
     array( '2015', '2016-02-19' ),
-    array( '2015-02', '2015-02', '2015-02', '2015-02', '2015-02' ),
+    array( '2015-02', '2015-02', '2015-02' ),
     array( '2015-02', '2016-02' ),
     array( '2015-02', '2015-03' ),
     array( '2015-02', '2016-03' ),
@@ -38,9 +35,6 @@ $dates = array(
     array( '2015-02-01' ),
     array( '2015-02-01', '2015-02-01' ),
     array( '2015-02-01', '2015-02-02' ),
-    array( '2015-02-01', '2015-02-02', '2015-02-03' ),
-    array( '2015-02-01', '2015-02-02', '2016-02-03' ),
-    array( '2015-02-01', '2015-03-02', '2016-02-03' ),
     array( '2015-02-01', '2015-03' ),
     array( '2015-02-01', '2016-01' ),
     array( '2015-02', '2015-03-08' ),
@@ -55,18 +49,6 @@ $dates = array(
 );
 
 echo '<table>';
-foreach ( $dates as $key => $value ) {
-
-    $arg = array(
-        'dates' => $value
-    );
-
-    echo '<tr>';
-        echo '<td>' . implode( $value, " — " ) . '</td>';
-        $pdh = new PhpDateHumanizer( $arg );
-        echo '<td>' . $pdh->output . '</td>';
-    echo '</tr>';
-}
 foreach ( $dates as $key => $value ) {
 
     $arg = array(
@@ -95,9 +77,6 @@ foreach ( $dates as $key => $value ) {
 }
 
 echo '</table>';
-
-$end = microtime(true);
-echo $end - $start;
 
 ?>
 
