@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Phpdatehumanizer by cherenkevich</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Phpdatehumanizer</h1>
+      <h2 class="project-tagline">Человеческие даты и интервалы</h2>
+      <a href="https://github.com/cherenkevich/phpDateHumanizer" class="btn">View on GitHub</a>
+      <a href="https://github.com/cherenkevich/phpDateHumanizer/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/cherenkevich/phpDateHumanizer/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="phpdatehumanizer" class="anchor" href="#phpdatehumanizer" aria-hidden="true"><span class="octicon octicon-link"></span></a>PHPDateHumanizer</h1>
+
+<p>PHPDateHumanizer — PHP-класс, который принимает на вход одну или две даты и возвращает строковую в человеческом формате. Например, на «2015-01-01, 2015-01-02» класс вернет «1—2 января 2015». Или даже «1—2 января», если речь едёт про текущий год.</p>
+
+<p>PHPDateHumanizer родился из необходимости красиво рендерить даты событий: в админке задается дата старта события и, если нужно, дата окончания. Класс распознаёт разные комбинации форматов. </p>
+
+<p>Класс убивает дубликаты на случай, если вы подали на вход в качестве начала и окончания две одинаковые даты.</p>
+
+<p>Сейчас PHPDateHumanizer работает только с одиночными датами и с интервалами. Будет здорово, если найдется кто-нибудь, кто допишет нужный код, который позволит работать с любым количеством дат, поступающим на вход:</p>
+
+<ul>
+<li>Если на вход подана одна дата — то это без вариантов одна точечная дата.</li>
+<li>Если на вход поданы две даты — это интервал и его нужно рендерить как промежуток, с тире</li>
+<li>Если на вход поданы три и более дат — их нужно рендерить через запятую: «1,2 и 3 июля»,  «Сентябрь, октябрь и декабрь 2011» и так далее.</li>
+</ul>
+
+<h2>
+<a id="Работа-с-классом" class="anchor" href="#%D0%A0%D0%B0%D0%B1%D0%BE%D1%82%D0%B0-%D1%81-%D0%BA%D0%BB%D0%B0%D1%81%D1%81%D0%BE%D0%BC" aria-hidden="true"><span class="octicon octicon-link"></span></a>Работа с классом</h2>
+
+<ol>
+<li>Скачайте</li>
+<li>Подключите</li>
+</ol>
+
+<pre><code>require_once( 'PhpDateHumanizer.php' );
+</code></pre>
+
+<ol>
+<li>Создайте экземпляр класса с нужными опциями:</li>
+</ol>
+
+<pre><code>$arg = array(
+    'dates' =&gt; array( '2014-02-12T19:00:00', '2014-02-13T19:00:00' ),
+    'timezone' =&gt; 'Asia/Tokyo'
+);
+$date = new PhpDateHumanizer( $arg );
+echo $date-&gt;output;
+</code></pre>
+
+<h2>
+<a id="Опции" class="anchor" href="#%D0%9E%D0%BF%D1%86%D0%B8%D0%B8" aria-hidden="true"><span class="octicon octicon-link"></span></a>Опции</h2>
+
+<ul>
+<li>
+<code>dates</code> — массив дат.</li>
+<li>
+<code>show_this_year</code> — скрывать год, если он совпадает с текущим. По умолчанию true.</li>
+<li>
+<code>use_alias</code> — «вчера», «сегодня», «завтра» вместо дат.</li>
+<li>
+<code>timezone</code> — нужна для корректной работы функции <code>date()</code> и применяется только для определения синонимов «Сегодня», «Вчера», «Завтра». Она никак не повлияет на часы и минуты, которые будут вы передадите в массиве <code>dates</code>. По умолчанию <code>timezone</code> равен <code>UTC</code>.</li>
+<li>
+<code>lang</code> — массив строковых для локализации. По умолчанию класс возвращает строчку на английском языке. Чтобы работать с русским языком, нужно передать в опции <code>lang</code> такой массив:</li>
+</ul>
+
+<pre><code>'lang'              =&gt; array(
+    'since'             =&gt; 'с',
+    'till'              =&gt; 'по',
+    'at'                =&gt; 'в',
+    'today'             =&gt; 'Сегодня',
+    'tomorrow'          =&gt; 'Завтра',
+    'yesterday'         =&gt; 'Вчера',
+    'nounSeparator'     =&gt; '&amp;nbsp;&amp;mdash; ',
+    'numberSeparator'   =&gt; '&amp;mdash;',
+    'nominative'        =&gt; array( 'январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь' ),
+    'genitive'          =&gt; array( 'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря')
+)
+</code></pre>
+
+<h1>
+<a id="Известные-проблемы" class="anchor" href="#%D0%98%D0%B7%D0%B2%D0%B5%D1%81%D1%82%D0%BD%D1%8B%D0%B5-%D0%BF%D1%80%D0%BE%D0%B1%D0%BB%D0%B5%D0%BC%D1%8B" aria-hidden="true"><span class="octicon octicon-link"></span></a>Известные проблемы</h1>
+
+<ul>
+<li>Как написано выше, остается открытым вопрос в случае, когда переданных дат больше двух.</li>
+<li>Капитализация первой буквы: для кириллицы в PHP это сделано через жопу. Поэтому делайте первую букву большой, если это нужно, через CSS.</li>
+<li>Порядок слов на выходе как часть языкового пресета. Например, в английском языке дата пишется в формате «February 14, 2015», в русском — «14 февраля 2015». </li>
+</ul>
+
+<p>Все баги, пулл-реквесты и все остальное на Гитхабе.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/cherenkevich/phpDateHumanizer">Phpdatehumanizer</a> is maintained by <a href="https://github.com/cherenkevich">cherenkevich</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
