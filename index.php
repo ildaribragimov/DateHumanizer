@@ -1,12 +1,12 @@
 <?php
 
-require_once( 'PhpDateHumanizer.php' );
+require_once( 'DateHumanizer.php' );
 
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>PhpDateHumanizer Test</title>
+    <title>DateHumanizer Test</title>
 </head>
 <body>
 
@@ -71,7 +71,7 @@ foreach ( $dates as $key => $value ) {
 
     echo '<tr>';
         echo '<td>' . implode( $value, " — " ) . '</td>';
-        $pdh = new PhpDateHumanizer( $arg );
+        $pdh = new DateHumanizer( $arg );
         echo '<td>' . $pdh->output . '</td>';
     echo '</tr>';
 }

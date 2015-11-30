@@ -9,7 +9,7 @@
  * @license http://opensource.org/licenses/mit-license.php The MIT License (MIT)
  */
 
-class PhpDateHumanizer {
+class DateHumanizer {
 
     public $dates;
     public $use_alias;
